@@ -442,13 +442,31 @@
         <h3 class="title is-4">Explicit feedback: Caption generation</h3>
         <div class="content has-text-justified">
           <p>
-
-            Broadly inspired by (or vaguely analogous to) the <a target=”_blank” href="https://en.wikipedia.org/wiki/Two-streams_hypothesis">two-stream hypothesis in cognitive psychology</a>, we present a two-stream architecture 
-            for vision-based manipulation with semantic and spatial pathways. The semantic stream uses a pre-trained CLIP model  
-            to encode RGB and language-goal input. Since CLIP is trained with large amounts of image-caption pairs from the internet,
-            it acts as a powerful semantic prior for <a target="_blank" href="https://distill.pub/2021/multimodal-neurons/">grounding visual concepts</a> like colors, shapes, parts, texts, and object categories. 
-            The spatial stream is a tabula rasa fully-convolutional network that encodes RGB-D input. 
+            Inner Monologue~\cite{pmlr-v205-huang23c} demonstrated that human-provided language feedback can significantly improve high-level instruction completion on robotic manipulation tasks. 
+            But human-written language feedback is too expensive to scale.  We therefore explore a caption generation based model as an automatic way to generate language feedback without training.
           </p>
+
+          <p>
+          As shown in the above figure, we use Llama 2 and the trained pick-and-place CLIPort primitive as the Planner and Actor, respectively.
+          For the Reporter,
+          we use the VLM OpenFlamingo with few-shot prompting to generate the following two types of feedback:
+          <i>Observation state feedback</i>
+          which is the information about the objects on the table and their potential changes,
+          and 
+          <i>Action success state feedback</i>
+          which is the description whether the last instruction is executed successfully or not.
+          </p>
+
+          <p>
+          When a step's action has executed, there will be a top-down RGB image rendered by the simulator. 
+          The VLM as the Reporter module will generate the caption feedback based on the current image or the whole image history.
+          This caption feedback is sent to the LLM for its next-step planning.
+          The Planner-Actor-Reporter closed-loop process will be
+          iteratively executed until the high-level goal is achieved
+          or the maximum number of trial steps has been exceeded.
+          </p>
+          
+            
         </div>
         <img src="https://shengqiang-zhang.github.io/lohoravens-webpage/media/images/explicit_baseline.png" class="interpolation-image" 
          alt="Interpolate start reference image." />
