@@ -483,31 +483,35 @@
          alt="Interpolate start reference image." />
         <div class="content has-text-justified">
           <p>
-            We use this two-stream architecture in all three networks of <a target=”_blank” href="https://transporternets.github.io/">TransporterNets</a> 
-            to predict pick and place affordances at each timestep. TransporterNets first attends to a local region to decide where to pick, 
-            then computes a placement location by finding the best match for the picked region through 
-            cross-correlation of deep visual features. This structure serves as a powerful inductive bias for learning <a target="_blank" href="https://fabianfuchsml.github.io/equivariance1of2/">roto-translationally equivariant</a> representations in tabletop environments.
+            Explicitly converting an image to language captions
+            is straightforward and simple. However,
+            it typically causes information loss and exaggerates bias present in training data.
+            On the other hand, training an end-to-end multimodal LLM would be too expensive.
+            Thus another common solution used in many VLMs is to use a learnable interface such as a
+            projection-based interface or a group of
+            learnable query tokens to connect
+            vision and language modalities while freezing parameters of
+            the LLM and the visual encoder.
+
+
+
+            We use LLaVA for this second baseline.
+            LLaVA uses the simple projection-based scheme as the learnable interface between the vision model and the pretrained LLM.
+            As shown in the above figure, the pretrained CLIP visual encoder ViT-L/14 encodes the observation image to visual embeddings. 
+            A single-layer MLP as the learnable interface then translates the visual embeddings to the LLM's token embedding space. 
+            The LLM will generate the next-step plan conditioned on the language instruction prompts and the translated visual embeddings.
+            LLaVA uses LLaMA as the LLM.
+
+
+
+            To fine-tune LLaVA, for each step of the task instances in the train set, we use the oracle program of the simulator to generate the image before the step and the language instruction for the step as the pair of train data.
+            For the inference process, LLaVA receives the generated
+            images after each step's execution
+            (just as the caption generation based model does).
+            LLaVA then outputs the next-step language instruction to CLIPort for execution. 
 
           </p>
         </div>
-        <div class="content has-text-centered">
-          <video id="transporter-gif"
-                 controls
-                 muted
-                 autoplay
-                 loop
-                 width="40%">
-            <source src="https://transporternets.github.io/images/animation.mp4"
-                    type="video/mp4">
-          </video>
-          <p>
-          Credit: <a href="https://transporternets.github.io/">Zeng et. al (Google)</a>
-          </p>
-        </div>
-        <br/>
-            <b>Paradigm 2:</b> TransporterNets takes an <a target="_blank" href="https://en.wikipedia.org/wiki/Ecological_psychology">action-centric approach</a> to perception where the objective is to <i>detect actions</i> rather than <i>detect objects</i> and then learn a policy. Keeping the action-space grounded in the perceptual input allows us to exploit geometric symmetries for efficient representation learning. 
-            When combined with CLIP's pre-trained representations, this enables the learning of reusable manipulation skills without any "objectness" assumptions.
-        <br/>
         <br/>
         <br/>
 
