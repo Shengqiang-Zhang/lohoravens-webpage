@@ -492,23 +492,22 @@
             learnable query tokens to connect
             vision and language modalities while freezing parameters of
             the LLM and the visual encoder.
-
-
-
+          </p>
+          <p>
             We use LLaVA for this second baseline.
             LLaVA uses the simple projection-based scheme as the learnable interface between the vision model and the pretrained LLM.
             As shown in the above figure, the pretrained CLIP visual encoder ViT-L/14 encodes the observation image to visual embeddings. 
             A single-layer MLP as the learnable interface then translates the visual embeddings to the LLM's token embedding space. 
             The LLM will generate the next-step plan conditioned on the language instruction prompts and the translated visual embeddings.
             LLaVA uses LLaMA as the LLM.
-
-
-
+          </p>
+          <p>
             To fine-tune LLaVA, for each step of the task instances in the train set, we use the oracle program of the simulator to generate the image before the step and the language instruction for the step as the pair of train data.
             For the inference process, LLaVA receives the generated
             images after each step's execution
             (just as the caption generation based model does).
             LLaVA then outputs the next-step language instruction to CLIPort for execution. 
+          </p>
 
           </p>
         </div>
