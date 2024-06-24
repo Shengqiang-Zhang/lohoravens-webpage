@@ -1,6 +1,6 @@
-/* body {
+body {
   font-family: 'Noto Sans', sans-serif;
-} */
+}
 
 
 .footer .icon-link {
@@ -58,7 +58,7 @@
 }
 
 .publication-title {
-    font-family: 'Palatino', serif;
+    font-family: 'Google Sans', serif;
 }
 
 .publication-authors {
@@ -77,8 +77,6 @@
     font-weight: bolder;
 }
 
-.publication-authors {
-}
 
 .publication-authors a {
    color: hsl(121, 100%, 36%) !important;
