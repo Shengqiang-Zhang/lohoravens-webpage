@@ -1,6 +1,6 @@
-body {
+/* body {
   font-family: 'Noto Sans', sans-serif;
-}
+} */
 
 
 .footer .icon-link {
@@ -58,7 +58,7 @@ body {
 }
 
 .publication-title {
-    font-family: 'Google Sans', sans-serif;
+    font-family: 'Palatino', serif;
 }
 
 .publication-authors {
