@@ -38,8 +38,6 @@ body {
   margin-left: -10px;
 }
 
-.publication-title {
-}
 
 .publication-banner {
   max-height: parent;
@@ -59,6 +57,7 @@ body {
 
 .publication-title {
     font-family: 'Palatino', serif;
+    font-size: 22px;
 }
 
 .publication-authors {
