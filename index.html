@@ -5,7 +5,7 @@
       font-family: "Palatino";
       src: url(./static/font/Palatino.ttc) format('truetype');
     }
-    body,td,th,tr,p,a,ul,li {
+    body,td,th,tr,p,a,ul,li,span {
       font-family: "Palatino", "TeXGyrePagella", "Palatino Linotype", "Book Antiqua", serif; /*'Lato', Verdana, Helvetica, sans-serif;*/
       font-size: 20px; /*14*/
       line-height: 130%;
@@ -447,21 +447,20 @@
           LoHoRavens simulated environment and the VLMs we use,
           we just prompt the VLMs to generate the following types of
           feedback:
-          <ul>
-          <li><i>Observation state feedback</i>:
+          <OL TYPE=”I”>
+          <LI><i>Observation state feedback</i>:
           Besides the human instruction at the beginning, the Planner needs to have the
           information about the objects on the table for the planning.
           Furthermore, if the states of the objects change, the VLM
           Reporter should describe the changes to the LLM Planner.
-          <li> <i>Action success state feedback</i>:
+          <LI> <i>Action success state feedback</i>:
           The robot Actor
           may fail to complete the instruction given by the LLM
           Planner. This kind of success state information (or rather
           failure information) should be conveyed to the Planner. The
           VLM Reporter will indicate in its description whether the
           last instruction is executed successfully or not.
-          </li>
-          </ul>
+          </OL>
           </p>
           
             
