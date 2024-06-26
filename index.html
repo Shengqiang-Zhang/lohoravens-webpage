@@ -31,6 +31,9 @@
       font-family: "Palatino";
       src: url(./static/font/Palatino.ttc) format('truetype');
     }
+    ul {
+      padding-left: 10px;
+    }
   </style>
 <head>
   <!-- <style>
@@ -303,56 +306,6 @@
   We learn <b>one multi-task policy</b> for 9 real-world tasks including folding cloths, sweeping beans etc. with just <b>179</b> image-action training pairs.
 </h2> -->
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered" style="position:relative">
-      <div class="column is-four-fifths">
-      <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-          The convergence of embodied agents and foundation models has brought significant advancements to embodied instruction following.
-          Particularly, the strong reasoning capabilities of large language models (LLMs) and visual perceptual capabilities of vision-language models (VLMs) make it possible for robots to perform long-horizon tasks without expensive annotated demonstrations.
-          However, public benchmarks for testing the long-horizon reasoning capabilities of language-conditioned robots in various scenarios are still missing. 
-          To fill this gap, this work focuses on tabletop
-          rearrangement tasks and releases a simulation benchmark,
-          <i>LoHoRavens</i>, that contains 40 tasks and covers diverse long-horizon
-          reasoning aspects spanning color, size, spatiality,
-          arithmetics, reference, shape construction, commonsense and hidden objects.
-          We test two popular methods and conduct a comprehensive analysis of their  reasoning capabilities.
-          We find that both methods struggle to solve some tasks, indicating long-horizon manipulation tasks are still challenging for current popular models.
-          We expect the proposed public benchmark and baselines can help the community develop better models and benchmarks for long-horizon tabletop rearrangement tasks.
-          </p>
-
-        </div>
-      </div>
-      <!-- <div class="column is-two-fifths" style="float: right; width: 40%;">
-        <div class="column is-two-fifths" style="position:absolute; bottom:0">
-          <img src="https://shengqiang-zhang.github.io/lohoravens-webpage/media/images/firstpage.png" class="interpolation-image" 
-          alt="Interpolate start reference image." />
-        </div>
-      </div> -->
-    </div>
-    <!--/ Abstract. -->
-
-  </div>
-
-    <!-- Paper video. -->
-    </br>
-    </br>
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-two-thirds">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <!-- <iframe src="https://www.youtube.com/embed/UdzoagBgWTA?rel=0&amp;showinfo=0" -->
-          <iframe src="https://www.youtube.com/embed/sguEFlVdEUA?si=50Ng-vZSNoTWdJZE"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-
-    <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/sguEFlVdEUA?si=50Ng-vZSNoTWdJZE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
-</section>
 
 <section class="section">
   <div class="container is-max-widescreen">
@@ -461,10 +414,13 @@
 
         <!-- Interpolating. -->
         <h3 class="title is-4">Imitation Learning based model (IL)</h3>
+        <class="content has-text-justified">
         <div>
+          <p>
           We use the same architecture and training recipe as CLIPort for the imitation learning baseline.
           Using multi-task training, the CLIPort model is trained with the train sets of all 20 seen tasks along with the three pick-and-place primitives for 100K steps. 
           Because the vanilla CLIPort does not know when to stop execution, following Inner Monologue and CaP, we use an oracle termination variant that uses the oracle information from the simulator to detect the success rate and stop the execution process.
+          </p>
         </div>
 
         <br/>
@@ -491,11 +447,13 @@
           LoHoRavens simulated environment and the VLMs we use,
           we just prompt the VLMs to generate the following types of
           feedback:
-          <i>Observation state feedback</i>
+          <ul>
+          <li><i>Observation state feedback</i></li>
           Besides the human instruction at the beginning, the Planner needs to have the
           information about the objects on the table for the planning.
           Furthermore, if the states of the objects change, the VLM
           Reporter should describe the changes to the LLM Planner.
+          <li>
           <i>Action success state feedback</i>
           The robot Actor
           may fail to complete the instruction given by the LLM
@@ -503,7 +461,9 @@
           failure information) should be conveyed to the Planner. The
           VLM Reporter will indicate in its description whether the
           last instruction is executed successfully or not.
+          </li>
           </p>
+          </ul>
           
             
         </div>
@@ -514,18 +474,26 @@
         <br/>
         <!--/ Interpolating. -->
 
+        <h3 class="title is-4">More baselines are being added ...</h3>
+        <br/>
+        <br/>
+
+
         <h2 class="title is-3"><span class="dcliport">Results</span></h2>
         <img src="https://shengqiang-zhang.github.io/lohoravens-webpage//media/images/exp_results_dpi799.png" class="interpolation-image" 
          alt="Interpolate start reference image."/>
+         <p>
         The above figure shows how the two baselines perform on all seen tasks and unseen tasks.
         Numbers are averages over all relevant tasks.
         We can see that the imitation learning based CLIPort model (IL) performs a little worse than the Planner-Actor-Reporter based model (PAR) on the seen tasks. 
         However, when generalizing to the unseen tasks, the IL model drops quit a lot while the PAR counterpart can have almost the same performance as on the seen tasks.
         The binary success rate of both models is quite low, indicating it's very hard for them to finish all the steps of the long-horizon tasks. 
+        </p>
         <br/>
         <br/>
         <img src="https://shengqiang-zhang.github.io/lohoravens-webpage//media/images/capabilities_results_dpi799.png" class="interpolation-image" 
          alt="Interpolate start reference image."/>
+         <p>
          As we can see from the above figure, the overall tendency is that the models' performance drops as the number of combinations of reasoning increases.
          This observation fits with our intuition that 
          the more reasoning capabilities the tasks require,
@@ -534,8 +502,9 @@
          Unexpectedly, the IL baseline performs better on the tasks requiring "color+size" capabilities than on the tasks requiring 
          "color+size+commonsense" capabilities.
          We speculate the reason is that "color+size+commonsense" tasks typically use commonsense to filter the objects needed to manipulate, thus this kind of task usually requires fewer steps to complete.
+        </p>
          
-         
+        <p>
          Another interesting finding is that the two baselines perform differently regarding different reasoning capabilities.
          On the seen tasks requiring spatial reasoning capability, 
          the IL model usually performs better.
@@ -546,7 +515,8 @@
          This also prevents the PAR model from solving the tasks
          requiring arithmetic reasoning since these tasks usually
          comprise multiple objects of the same kind.
-         
+         </p>
+        <p>
          The experiments also show that some tasks are extremely hard for both models. 
          For tasks that contain hidden objects, 
          both models struggle to reason to remove the top object that blocks the bottom target objects.
@@ -554,6 +524,7 @@
          are almost completely unable to solve shape construction tasks.
          To summarize, LoHoRavens is a good resource to benchmark methods for robotic manipulation. 
          It is also a challenging benchmark that can facilitate future work on developing more advanced models on long-horizon robotic tasks.
+        </p>
 
 
 
