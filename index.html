@@ -448,20 +448,21 @@
           we just prompt the VLMs to generate the following types of
           feedback:
           </p>
-          <OL TYPE="square">
-          <LI><i>Observation state feedback</i>:
+
+          <ul>
+          <li><i>Observation state feedback</i>:
           Besides the human instruction at the beginning, the Planner needs to have the
           information about the objects on the table for the planning.
           Furthermore, if the states of the objects change, the VLM
-          Reporter should describe the changes to the LLM Planner.</LI>
-          <LI><i>Action success state feedback</i>:
+          Reporter should describe the changes to the LLM Planner.</li>
+          <li><i>Action success state feedback</i>:
           The robot Actor
           may fail to complete the instruction given by the LLM
           Planner. This kind of success state information (or rather
           failure information) should be conveyed to the Planner. The
           VLM Reporter will indicate in its description whether the
-          last instruction is executed successfully or not. </LI>
-          </OL>
+          last instruction is executed successfully or not. </li>
+          </ul>
           
             
         </div>
